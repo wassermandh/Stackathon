@@ -10,6 +10,24 @@ const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
+const envVars = require('../secrets')
+const cloudinary = require('cloudinary')
+const formData = require('express-form-data')
+const cors = require('cors')
+
+cloudinary.config({
+  cloud_name: envVars.CLOUD_NAME,
+  api_key: envVars.API_KEY,
+  api_secret: envVars.API_SECRET
+})
+
+app.use(
+  cors({
+    origin: 'http://localhost:8080/'
+  })
+)
+app.use(formData.parse())
+
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.

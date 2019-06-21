@@ -6,3 +6,8 @@
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
 export {Login, Signup} from './auth-form'
+export {default as Buttons} from './buttons'
+export {default as Spinner} from './spinner'
+export {default as UploadImages} from './uploadImages'
+export {default as Images} from './images'
+export {default as Map} from './map'

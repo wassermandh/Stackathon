@@ -4,11 +4,12 @@ var ExifImage = require('exif').ExifImage
 
 module.exports = router
 
-router.post('/', async (req, res, next) => {
+router.post('/', (req, res, next) => {
   try {
-    const labels = await getLabels(req.body.image)
+    const image = req.body[0].imagePath
+    // const labels = await getLabels(req.files.path)
     // eslint-disable-next-line no-new
-    new ExifImage({image: req.body.image}, function(error, exifData) {
+    new ExifImage({image}, function(error, exifData) {
       if (error) {
         next(error)
       }
@@ -18,7 +19,6 @@ router.post('/', async (req, res, next) => {
       response.DateTimeOriginal = exifData.exif.DateTimeOriginal
       response.lensModel = exifData.exif.LensModel
       response.gps = exifData.gps
-      response.labels = labels
       res.send(response) // Do something with your data!
     })
   } catch (error) {

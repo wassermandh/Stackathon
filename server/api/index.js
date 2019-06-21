@@ -3,6 +3,7 @@ module.exports = router
 
 router.use('/users', require('./users'))
 router.use('/picInfo', require('./picInfo'))
+router.use('/uploadPic', require('./uploadPic'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')
