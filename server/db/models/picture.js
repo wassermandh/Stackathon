@@ -25,6 +25,9 @@ const Picture = db.define('picture', {
   },
   URL: {
     type: Sequelize.STRING
+  },
+  caption: {
+    type: Sequelize.TEXT
   }
 })
 

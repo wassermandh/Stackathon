@@ -6,10 +6,10 @@ import Images from './images'
 import Buttons from './buttons'
 
 class UploadImages extends Component {
-  // state = {
-  //   uploading: false,
-  //   images: []
-  // }
+  state = {
+    uploading: false,
+    allImageInfo: []
+  }
 
   onChange = async e => {
     const files = Array.from(e.target.files)
@@ -20,40 +20,35 @@ class UploadImages extends Component {
     files.forEach((file, i) => {
       formData.append(i, file)
     })
-    const {data} = await axios.post('/api/uploadPic', formData)
+    const {data} = await axios.post('/api/pics/uploadPic', formData)
     const imageData = data[0]
-    const meta = await axios.post('/api/picInfo', data)
+    const meta = await axios.post('/api/pics/picInfo', data)
     const metaData = meta.data
     const allImageInfo = {...imageData, ...metaData}
     console.log(allImageInfo)
-    // fetch('api/uploadPic', {
-    //   method: 'POST',
-    //   body: formData
-    // })
-    //   .then(res => res.json())
-    //   .then(images => {
-    //     this.setState({
-    //       uploading: false,
-    //       images
-    //     })
-    //   })
+    this.setState({
+      uploading: false,
+      allImageInfo: [allImageInfo]
+    })
   }
 
   removeImage = id => {
-    // this.setState({
-    //   images: this.state.images.filter(image => image.public_id !== id)
-    // })
+    this.setState({
+      allImageInfo: this.state.allImageInfo.filter(
+        image => image.public_id !== id
+      )
+    })
   }
 
   render() {
-    const {uploading, images} = this.state
+    const {uploading, allImageInfo} = this.state
 
     const content = () => {
       switch (true) {
         case uploading:
           return <Spinner />
-        case images.length > 0:
-          return <Images images={images} removeImage={this.removeImage} />
+        case allImageInfo.length > 0:
+          return <Images images={allImageInfo} removeImage={this.removeImage} />
         default:
           return <Buttons onChange={this.onChange} />
       }
