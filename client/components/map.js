@@ -72,7 +72,7 @@ class Map extends Component {
 
 const mapStateToProps = state => {
   return {
-    pictures: state.pictures
+    pictures: state.pictures.allPics
   }
 }
 

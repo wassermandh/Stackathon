@@ -9,15 +9,37 @@ import env from '../../secrets'
 const GOT_PICTURES = 'GOT_PICTURES'
 const ADDED_PICTURE = 'ADDED_PICTURE'
 const REMOVED_PIC = 'REMOVED_PIC'
+// const SET_PICTURE = 'SET_PICTURE'
+const UPDATE_PICTURE = 'UPDATE_PICTURE'
 
 /**
  * INITIAL STATE
  */
-const defaultState = []
+const defaultState = {allPics: [], selectedPic: {}}
 
 /**
  * ACTION CREATORS
  */
+
+export const updatePicture = (
+  id,
+  title,
+  location,
+  caption,
+  latCoo,
+  longCoo
+) => {
+  return {
+    type: UPDATE_PICTURE,
+    id,
+    title,
+    location,
+    caption,
+    latCoo,
+    longCoo
+  }
+}
+
 const gotPictures = pics => {
   return {
     type: GOT_PICTURES,
@@ -42,6 +64,19 @@ const removedPic = pic => {
 /**
  * THUNK CREATORS
  */
+export const updatingPicture = (id, title, location, caption) => {
+  return async dispatch => {
+    try {
+      const payload = {id, title, location, caption}
+      const {data} = await axios.put('/api/pics/updatePic', payload)
+      dispatch(
+        updatePicture(id, title, location, caption, data.latCoo, data.longCoo)
+      )
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
 
 export const getPictures = () => {
   return async dispatch => {
@@ -64,6 +99,7 @@ export const addPicture = formData => {
       const allImageInfo = {...imageData, ...metaData}
       const newPic = await axios.post('/api/pics/storePic', allImageInfo)
       dispatch(addedPicture(newPic.data))
+      history.push('/picUpdate')
     } catch (err) {
       console.log(err)
     }
@@ -87,16 +123,59 @@ export const removePic = pic => {
 export default function(state = defaultState, action) {
   switch (action.type) {
     case GOT_PICTURES:
-      return action.pics
+      if (action.allPics) {
+        return {...state, allPics: action.allPics}
+      } else {
+        return {...state}
+      }
     case ADDED_PICTURE:
-      state.push(action.pic)
-      return [...state]
+      state.allPics.push(action.pic)
+      state.selectedPic = action.pic
+      return {...state}
     case REMOVED_PIC:
-      const newState = state.filter(pic => {
+      const newState = state.allPics.filter(pic => {
         return pic.id !== action.pic.id
       })
-      return [...newState]
+      if (newState.selectedPic.id === action.pic.id) {
+        newState.selectedPic = null
+      }
+      return {...newState}
+    case UPDATE_PICTURE:
+      if (action.title) {
+        state.selectedPic.title = action.title
+      }
+      if (action.location) {
+        state.selectedPic.location = action.location
+        state.selectedPic.latCoo = action.latCoo
+        state.selectedPic.longCoo = action.longCoo
+      }
+      if (action.caption) {
+        state.selectedPic.caption = action.caption
+      }
+      return {...state}
     default:
       return state
   }
 }
+
+// export default function(state = defaultState, action) {
+//   switch (action.type) {
+//     case SET_PICTURE:
+//       return action.pic
+//     case UPDATE_PICTURE:
+//       if (action.title) {
+//         state.title = action.title
+//       }
+//       if (action.location) {
+//         state.location = action.location
+//         state.latCoo = action.latCoo
+//         state.longCoo = action.longCoo
+//       }
+//       if (action.caption) {
+//         state.caption = action.caption
+//       }
+//       return {...state}
+//     default:
+//       return state
+//   }
+// }

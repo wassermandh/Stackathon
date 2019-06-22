@@ -5,6 +5,7 @@ import axios from 'axios'
 import Images from './images'
 import Buttons from './buttons'
 import {getPictures, addPicture, removePic} from '../store/picture'
+import {setPicture} from '../store/selectedPicture'
 
 class UploadImages extends Component {
   constructor() {
@@ -47,10 +48,6 @@ class UploadImages extends Component {
         case this.props.pictures.length > 0:
           return (
             <div>
-              <Images
-                images={this.props.pictures}
-                removeImage={this.removeImage}
-              />
               <Buttons onChange={this.onChange} />
             </div>
           )
@@ -69,7 +66,7 @@ class UploadImages extends Component {
 
 const mapStateToProps = state => {
   return {
-    pictures: state.pictures
+    pictures: state.pictures.allPics
   }
 }
 
@@ -83,6 +80,9 @@ const mapDispatchToProps = dispatch => {
     },
     removePic: pic => {
       dispatch(removePic(pic))
+    },
+    setPicture: pic => {
+      dispatch(setPicture(pic))
     }
   }
 }

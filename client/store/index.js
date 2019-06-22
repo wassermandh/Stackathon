@@ -6,7 +6,7 @@ import user from './user'
 import pictures from './picture'
 import selectedPic from './selectedPicture'
 
-const reducer = combineReducers({user, pictures, selectedPic})
+const reducer = combineReducers({user, pictures})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )

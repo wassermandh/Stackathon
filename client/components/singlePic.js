@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {updateUsers} from '../store/user'
-import {updatingPicture} from '../store/selectedPicture'
+import {updatingPicture} from '../store/picture'
 
 class PictureUpdateForm extends React.Component {
   constructor(props) {
@@ -67,7 +67,7 @@ class PictureUpdateForm extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    selectedPic: state.selectedPic
+    selectedPic: state.pictures.selectedPic
   }
 }
 
