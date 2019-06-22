@@ -40,6 +40,7 @@ class PictureUpdateForm extends React.Component {
               />
               <label>Location: </label>
               <input
+                defaultValue={this.props.selectedPic.location}
                 name="location"
                 type="text"
                 onChange={evt => this.setState({location: evt.target.value})}

@@ -48,7 +48,7 @@ class Map extends Component {
                     })
                   }}
                 >
-                  <img src="https://i.stack.imgur.com/ZR00X.png" />
+                  <img src="https://docs.mapbox.com/help/demos/custom-markers-gl-js/mapbox-icon.png" />
                 </button>
               </Marker>
             )

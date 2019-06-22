@@ -123,8 +123,8 @@ export const removePic = pic => {
 export default function(state = defaultState, action) {
   switch (action.type) {
     case GOT_PICTURES:
-      if (action.allPics) {
-        return {...state, allPics: action.allPics}
+      if (action.pics) {
+        return {...state, allPics: action.pics}
       } else {
         return {...state}
       }
