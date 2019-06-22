@@ -6,51 +6,13 @@ const {User, Picture} = require('../server/db/models')
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
-
-  // onst Picture = db.define('picture', {
-  //   TimeTaken: {
-  //     type: Sequelize.STRING
-  //   },
-  //   latitudeDirection: {
-  //     type: Sequelize.STRING
-  //   },
-  //   latCoords: {
-  //     type: Sequelize.ARRAY(Sequelize.INTEGER)
-  //   },
-  //   longitudeDirection: {
-  //     type: Sequelize.STRING
-  //   },
-  //   longCoords: {
-  //     type: Sequelize.ARRAY(Sequelize.INTEGER)
-  //   },
-  //   brand: {
-  //     type: Sequelize.STRING
-  //   },
-  //   model: {
-  //     type: Sequelize.STRING
-  //   },
-  //   URL: {
-  //     type: Sequelize.STRING
-  //   }
-  // })
-
-  const picture = await Picture.create({
-    time: '061921',
-    latDir: 'N',
-    latCoo: [42, 42, 42],
-    longDir: 'W',
-    longCoo: [42, 42, 42],
-    brand: 'nokia',
-    model: 'brick phone',
-    URL: 'ebaumsworld.com'
-  })
-  const users = await Promise.all([
+  await Promise.all([
     User.create({email: 'cody@email.com', password: '123'}),
     User.create({email: 'murphy@email.com', password: '123'})
   ])
 
-  const cody = users[0]
-  await cody.addPicture(picture)
+  // const cody = users[0]
+  // await cody.addPicture(picture)
 }
 
 // We've separated the `seed` function from the `runSeed` function.
@@ -76,6 +38,5 @@ async function runSeed() {
 if (module === require.main) {
   runSeed()
 }
-
 // we export the seed function for testing purposes (see `./seed.spec.js`)
 module.exports = seed

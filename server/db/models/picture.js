@@ -2,20 +2,17 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Picture = db.define('picture', {
+  title: {
+    type: Sequelize.STRING
+  },
   time: {
     type: Sequelize.STRING
   },
-  latDir: {
-    type: Sequelize.STRING
-  },
   latCoo: {
-    type: Sequelize.ARRAY(Sequelize.INTEGER)
-  },
-  longDir: {
-    type: Sequelize.STRING
+    type: Sequelize.DECIMAL(10, 5)
   },
   longCoo: {
-    type: Sequelize.ARRAY(Sequelize.INTEGER)
+    type: Sequelize.DECIMAL(10, 5)
   },
   brand: {
     type: Sequelize.STRING
@@ -23,7 +20,7 @@ const Picture = db.define('picture', {
   model: {
     type: Sequelize.STRING
   },
-  URL: {
+  url: {
     type: Sequelize.STRING
   },
   caption: {

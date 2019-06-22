@@ -5,14 +5,11 @@ import {faTimesCircle} from '@fortawesome/free-solid-svg-icons'
 
 const images = props =>
   props.images.map((image, i) => (
-    <div key={i} className="fadein">
-      <div
-        onClick={() => props.removeImage(image.public_id)}
-        className="delete"
-      >
+    <div id="picList " key={i} className="fadein">
+      <div onClick={() => props.removeImage(image)} className="delete">
         <FontAwesomeIcon icon={faTimesCircle} size="2x" />
       </div>
-      <img src={image.secure_url} alt="" />
+      <img src={image.url} alt="" />
     </div>
   ))
 

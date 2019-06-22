@@ -4,14 +4,20 @@ import {connect} from 'react-redux'
 import axios from 'axios'
 import Images from './images'
 import Buttons from './buttons'
+import {getPictures, addPicture, removePic} from '../store/picture'
 
 class UploadImages extends Component {
-  state = {
-    uploading: false,
-    allImageInfo: []
+  constructor() {
+    super()
+    this.state = {
+      uploading: false
+    }
+  }
+  componentDidMount() {
+    this.props.getPictures()
   }
 
-  onChange = async e => {
+  onChange = e => {
     const files = Array.from(e.target.files)
     this.setState({uploading: true})
 
@@ -20,35 +26,34 @@ class UploadImages extends Component {
     files.forEach((file, i) => {
       formData.append(i, file)
     })
-    const {data} = await axios.post('/api/pics/uploadPic', formData)
-    const imageData = data[0]
-    const meta = await axios.post('/api/pics/picInfo', data)
-    const metaData = meta.data
-    const allImageInfo = {...imageData, ...metaData}
-    console.log(allImageInfo)
+    this.props.addPicture(formData)
+
     this.setState({
-      uploading: false,
-      allImageInfo: [allImageInfo]
+      uploading: false
     })
   }
 
-  removeImage = id => {
-    this.setState({
-      allImageInfo: this.state.allImageInfo.filter(
-        image => image.public_id !== id
-      )
-    })
+  removeImage = pic => {
+    this.props.removePic(pic)
   }
 
   render() {
-    const {uploading, allImageInfo} = this.state
+    const {uploading} = this.state
 
     const content = () => {
       switch (true) {
         case uploading:
           return <Spinner />
-        case allImageInfo.length > 0:
-          return <Images images={allImageInfo} removeImage={this.removeImage} />
+        case this.props.pictures.length > 0:
+          return (
+            <div>
+              <Images
+                images={this.props.pictures}
+                removeImage={this.removeImage}
+              />
+              <Buttons onChange={this.onChange} />
+            </div>
+          )
         default:
           return <Buttons onChange={this.onChange} />
       }
@@ -62,4 +67,24 @@ class UploadImages extends Component {
   }
 }
 
-export default connect(null, null)(UploadImages)
+const mapStateToProps = state => {
+  return {
+    pictures: state.pictures
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addPicture: pic => {
+      dispatch(addPicture(pic))
+    },
+    getPictures: () => {
+      dispatch(getPictures())
+    },
+    removePic: pic => {
+      dispatch(removePic(pic))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UploadImages)
