@@ -1,8 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {updateUsers} from '../store/user'
+import {updatingPicture} from '../store/selectedPicture'
 
-class UserUpdateForm extends React.Component {
+class PictureUpdateForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -15,48 +16,39 @@ class UserUpdateForm extends React.Component {
 
   handleSubmit(evt) {
     evt.preventDefault()
-    this.props.updateUsers(this.state, this.props.match.params.id)
+    this.props.updatingPicture(
+      this.props.selectedPic.id,
+      this.state.title,
+      this.state.location,
+      this.state.caption
+    )
   }
 
   render() {
     return (
       <div>
+        <h1> Update Your Pic Info!</h1>
+        <img src={this.props.selectedPic.url} />
         <form className="form" onSubmit={this.handleSubmit}>
           <ul>
-            Update Your Contact Info!
             <div>
-              <label> First Name: </label>
+              <label> Title: </label>
               <input
-                name="first"
+                name="title"
                 type="text"
-                onChange={evt => this.setState({first: evt.target.value})}
+                onChange={evt => this.setState({title: evt.target.value})}
               />
-              <label>Last Name: </label>
+              <label>Location: </label>
               <input
-                name="last"
+                name="location"
                 type="text"
-                onChange={evt => this.setState({last: evt.target.value})}
+                onChange={evt => this.setState({location: evt.target.value})}
               />
-              <label>Email: </label>
-              <input
-                name="eMail"
-                type="email"
-                email="true"
-                onChange={evt => this.setState({email: evt.target.value})}
+              <label>Caption: </label>
+              <textarea
+                name="caption"
+                onChange={evt => this.setState({caption: evt.target.value})}
               />
-              {/* <label>Password: </label> */}
-              {/* <input
-                name="password"
-                type="password"
-                required="true"
-                onChange={evt => this.setState({password: evt.target.value})}
-              /> */}
-              {/* <label>is Admin: </label>
-            <input
-              name="isAdmin"
-              type="boolean"
-              onChange={evt => this.setState({isAdmin: evt.target.value})}
-            /> */}
             </div>
             <button
               type="submit"
@@ -73,8 +65,18 @@ class UserUpdateForm extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  updateUsers: (state, userId) => dispatch(updateUsers(state, userId))
-})
+const mapStateToProps = state => {
+  return {
+    selectedPic: state.selectedPic
+  }
+}
 
-export default connect(null, mapDispatchToProps)(UserUpdateForm)
+const mapDispatchToProps = dispatch => {
+  return {
+    updatingPicture: (id, title, location, caption) => {
+      dispatch(updatingPicture(id, title, location, caption))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PictureUpdateForm)

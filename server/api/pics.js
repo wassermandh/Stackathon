@@ -114,3 +114,37 @@ router.put('/deletePic', async (req, res, next) => {
     next(err)
   }
 })
+
+router.put('/updatePic', async (req, res, next) => {
+  try {
+    const pic = await Picture.findByPk(req.body.id)
+    const {title, location, caption} = req.body
+    if (title) {
+      await pic.update({title: title})
+    }
+    if (location) {
+      let newLoc = ''
+      for (let i = 0; i < location.length; i++) {
+        if (location[i] === ' ' || location[i] === ',') {
+          newLoc += '%20'
+        } else {
+          newLoc += location[i]
+        }
+      }
+      const {data} = await axios.get(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${newLoc}.json?access_token=${
+          env.MAP_BOX_TOKEN
+        }`
+      )
+      const long = data.features[0].center[0]
+      const lat = data.features[0].center[1]
+      await pic.update({location: location, latCoo: lat, longCoo: long})
+    }
+    if (caption) {
+      await pic.update({caption: caption})
+    }
+    res.send(pic)
+  } catch (err) {
+    next(err)
+  }
+})
