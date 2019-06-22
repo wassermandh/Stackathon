@@ -1,6 +1,7 @@
 import axios from 'axios'
 import history from '../history'
 import {runInNewContext} from 'vm'
+import env from '../../secrets'
 
 /**
  * ACTION TYPES

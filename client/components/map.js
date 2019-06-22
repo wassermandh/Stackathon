@@ -36,8 +36,8 @@ class Map extends Component {
             return (
               <Marker
                 key={pic.id}
-                latitude={pic.latCoo}
-                longitude={pic.longCoo}
+                longitude={Number(pic.longCoo)}
+                latitude={Number(pic.latCoo)}
               >
                 <button
                   className="marker-btn"
@@ -55,8 +55,8 @@ class Map extends Component {
           })}
           {this.state.selectedPic ? (
             <Popup
-              latitude={this.state.selectedPic.latCoo}
-              longitude={this.state.selectedPic.longCoo}
+              longitude={Number(this.state.selectedPic.longCoo)}
+              latitude={Number(this.state.selectedPic.latCoo)}
               onClose={() => this.setState({selectedPic: null})}
             >
               <div>

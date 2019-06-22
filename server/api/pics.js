@@ -4,6 +4,7 @@ const {getLabels} = require('../metaDatafunctions')
 var ExifImage = require('exif').ExifImage
 const cloudinary = require('cloudinary')
 const axios = require('axios')
+const env = require('../../secrets')
 
 module.exports = router
 
@@ -45,10 +46,12 @@ router.post('/uploadPic', (req, res, next) => {
 router.post('/storePic', async (req, res, next) => {
   try {
     const {DateTimeOriginal, gps, make, model, url} = req.body
-    let latitude = 0
-    let longitude = 0
+    let latitude = null
+    let longitude = null
+    let address = null
     const {GPSLatitude, GPSLatitudeRef, GPSLongitude, GPSLongitudeRef} = gps
     if (GPSLatitude && GPSLongitude) {
+      latitude = 0
       latitude =
         Number(GPSLatitude[0]) +
         Number(GPSLatitude[1] / 60) +
@@ -58,6 +61,7 @@ router.post('/storePic', async (req, res, next) => {
       } else {
         latitude = 0 - latitude
       }
+      longitude = 0
       longitude =
         Number(GPSLongitude[0]) +
         Number(GPSLongitude[1] / 60) +
@@ -67,9 +71,17 @@ router.post('/storePic', async (req, res, next) => {
       } else {
         longitude = 0 - longitude
       }
+      const locationData = await axios.get(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${Number(
+          longitude
+        )},${Number(latitude)}.json?access_token=${env.MAP_BOX_TOKEN}`
+      )
+      address = locationData.data.features[0].place_name
     }
+
     const newPic = await Picture.create({
       time: DateTimeOriginal,
+      location: address,
       latDir: GPSLatitudeRef,
       latCoo: latitude,
       longDir: GPSLongitudeRef,

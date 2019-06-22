@@ -8,6 +8,9 @@ const Picture = db.define('picture', {
   time: {
     type: Sequelize.STRING
   },
+  location: {
+    type: Sequelize.TEXT
+  },
   latCoo: {
     type: Sequelize.DECIMAL(10, 5)
   },
