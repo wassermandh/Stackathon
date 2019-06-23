@@ -4,9 +4,39 @@ import {Link} from 'react-router-dom'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faTimesCircle} from '@fortawesome/free-solid-svg-icons'
 import {gettingMyPics, removePic, setPicture} from '../store/picture'
-import Grid from '@material-ui/core/Grid'
+import GridListTile from '@material-ui/core/GridListTile'
+import GridListTileBar from '@material-ui/core/GridListTileBar'
+import GridList from '@material-ui/core/GridList'
+import ListSubheader from '@material-ui/core/ListSubheader'
 import TextField from '@material-ui/core/TextField'
 import * as contentful from 'contentful'
+import {makeStyles} from '@material-ui/core/styles'
+import IconButton from '@material-ui/core/IconButton'
+// import InfoIcon from '@material-ui/icons/Info'
+import Typography from '@material-ui/core/Typography'
+// import Card from '@material-ui/core/Card'
+// import CardActions from '@material-ui/core/CardActions'
+// import CardContent from '@material-ui/core/CardContent'
+// import CardMedia from '@material-ui/core/CardMedia'
+// import Button from '@material-ui/core/Button'
+
+const classes = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden'
+  },
+  gridList: {
+    width: 500,
+    height: 450
+  },
+  icon: {
+    color: 'rgba(255, 255, 255, 0.54)'
+  }
+}
+
+// const classes = useStyles()
 
 class images extends React.Component {
   constructor(props) {
@@ -17,43 +47,65 @@ class images extends React.Component {
   }
   render() {
     return (
-      <div>
-        <Grid container spacing={12} style={{padding: 24}}>
+      <div className={classes.root}>
+        <GridList cellHeight={180} className={classes.gridList}>
+          <GridListTile key="subheader" cols={2} style={{height: 'auto'}}>
+            <ListSubheader component="div" style={{margin: '.5em'}}>
+              <Typography variant="h4">Your Pics</Typography>
+            </ListSubheader>
+          </GridListTile>
           {this.props.pictures.map((image, i) => {
             return (
-              <Grid
-                item
-                xs={6}
-                sm={4}
-                lg={3}
-                xl={2}
-                id="picList "
-                key={i}
-                className="fadein"
-              >
-                <div
-                  onClick={() => this.props.removePic(image)}
-                  className="delete"
-                >
-                  <FontAwesomeIcon icon={faTimesCircle} size="2x" />
-                </div>
-                <h2>
-                  <Link
-                    to="/picUpdate"
-                    onClick={() => this.props.setPicture(image)}
-                  >
-                    {image.title ? image.title : image.url}
-                  </Link>
-                </h2>
-                <img src={image.url} alt="" />
-              </Grid>
+              <GridListTile key={image.id}>
+                <img src={image.url} />
+                <GridListTileBar
+                  title={image.title}
+                  subtitle={image.caption}
+                  actionIcon={
+                    <div
+                      className="font-icon-wrapper"
+                      onClick={() => this.props.removePic(image)}
+                    >
+                      <IconButton aria-label="Remove" className={classes.icon}>
+                        Remove
+                      </IconButton>
+                    </div>
+                  }
+                />
+              </GridListTile>
             )
           })}
-        </Grid>
+        </GridList>
       </div>
     )
   }
 }
+//            {this.props.pictures.map((image, i) => {
+//             return (
+//               <GridListTileBar item id="picList " key={i} className="fadein">
+//                 <div
+//                   onClick={() => this.props.removePic(image)}
+//                   className="delete"
+//                 >
+//                   <FontAwesomeIcon icon={faTimesCircle} size="2x" />
+//                 </div>
+//                 <h2>
+//                   <Link
+//                     to="/picUpdate"
+//                     onClick={() => this.props.setPicture(image)}
+//                   >
+//                     {image.title ? image.title : image.url}
+//                   </Link>
+//                 </h2>
+//                 <img src={image.url} alt="" />
+//               </GridListTileBar>
+//             )
+//           })}
+//         </GridListTileBar>
+//       </div>
+//     )
+//   }
+// }
 // props.images.map((image, i) => (
 //   <div id="picList " key={i} className="fadein">
 //     <div onClick={() => props.removeImage(image)} className="delete">
