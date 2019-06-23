@@ -26,7 +26,9 @@ class Map extends Component {
   render() {
     const {selectedPic} = this.state
     return (
-      <div>
+      <div
+        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
+      >
         {this.props.user.id ? (
           ''
         ) : (
