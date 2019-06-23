@@ -63,10 +63,11 @@ class images extends React.Component {
               <GridListTile key={image.id}>
                 <img src={image.url} />
                 <GridListTileBar
-                  onClick={() => this.titleClick(image)}
                   title={
                     <div>
-                      <span>{image.title ? image.title : image.url}</span>
+                      <span onClick={() => this.titleClick(image)}>
+                        {image.title ? image.title : image.url}
+                      </span>
                       <Button
                         style={{color: 'red'}}
                         onClick={() => this.titleClick(image)}

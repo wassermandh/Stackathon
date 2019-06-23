@@ -7,6 +7,18 @@ import ReactMapGL, {Marker, Popup} from 'react-map-gl'
 import env from '../../secrets'
 import Typography from '@material-ui/core/Typography'
 import {getPictures} from '../store/picture'
+import Card from '@material-ui/core/Card'
+import CardActionArea from '@material-ui/core/CardActionArea'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
+import Button from '@material-ui/core/Button'
+
+const classes = {
+  card: {
+    maxWidth: 345
+  }
+}
 
 class Map extends Component {
   componentDidMount() {
@@ -68,11 +80,47 @@ class Map extends Component {
           })}
           {this.state.selectedPic ? (
             <Popup
+              id="popup"
               longitude={Number(this.state.selectedPic.longCoo)}
               latitude={Number(this.state.selectedPic.latCoo)}
               onClose={() => this.setState({selectedPic: null})}
             >
-              <div id="popup">
+              <Card className={classes.card}>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    style={{margin: 'auto'}}
+                    image={selectedPic.url}
+                    title={selectedPic.title}
+                  />
+                  <CardContent>
+                    <Typography
+                      style={{textAlign: 'center'}}
+                      variant="h4"
+                      color="black"
+                      component="h3"
+                    >
+                      {selectedPic.title}
+                    </Typography>
+                    <Typography variant="h5" color="black" component="h4">
+                      {selectedPic.caption}
+                    </Typography>
+                    <Typography color="black" component="p">
+                      This picture was taken with the {selectedPic.brand}{' '}
+                      {selectedPic.model} at {selectedPic.location}
+                    </Typography>
+                    <Typography
+                      style={{fontStyle: 'italic'}}
+                      color="black"
+                      component="p"
+                    >
+                      Time of photo: {selectedPic.time}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+              {/* <div id="popup">
                 <Typography>{this.state.selectedPic.title}</Typography>
                 <img src={selectedPic.url} />
                 <p>{selectedPic.caption}</p>
@@ -80,7 +128,7 @@ class Map extends Component {
                   Taken with the {selectedPic.brand} {selectedPic.model}
                 </p>
                 <p>Location: {selectedPic.location}</p>
-              </div>
+              </div> */}
             </Popup>
           ) : null}
         </ReactMapGL>
