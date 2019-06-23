@@ -8,7 +8,6 @@ const App = () => {
   return (
     <div>
       <Navbar />
-      <h1>Map my pictures</h1>
       <Routes />
     </div>
   )

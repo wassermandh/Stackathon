@@ -2,6 +2,7 @@ import React, {useState, Component, useEffect} from 'react'
 import {connect} from 'react-redux'
 import {Navbar} from './navbar'
 import Routes from '../routes'
+import {Link} from 'react-router-dom'
 import ReactMapGL, {Marker, Popup} from 'react-map-gl'
 import env from '../../secrets'
 import {getPictures} from '../store/picture'
@@ -24,6 +25,16 @@ class Map extends Component {
   render() {
     return (
       <div>
+        {this.props.user.id ? (
+          <h2>
+            <Link to="/uploadPic">Upload</Link> a pic
+          </h2>
+        ) : (
+          <h2>
+            <Link to="/login">Login</Link> or <Link to="/signup">Signup</Link>to
+            upload a picture
+          </h2>
+        )}
         <ReactMapGL
           {...this.state}
           mapStyle="mapbox://styles/wassermandh/cjx53ik37a8xl1cqspghlj5v0"
@@ -72,7 +83,8 @@ class Map extends Component {
 
 const mapStateToProps = state => {
   return {
-    pictures: state.pictures.allPics
+    pictures: state.pictures.allPics,
+    user: state.user
   }
 }
 

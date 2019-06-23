@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
 import Spinner from './spinner'
+import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import axios from 'axios'
 import Images from './images'
 import Buttons from './buttons'
+import {me} from '../store/user'
 import {getPictures, addPicture, removePic} from '../store/picture'
 import {setPicture} from '../store/selectedPicture'
 
@@ -45,28 +47,32 @@ class UploadImages extends Component {
       switch (true) {
         case uploading:
           return <Spinner />
-        case this.props.pictures.length > 0:
-          return (
-            <div>
-              <Buttons onChange={this.onChange} />
-            </div>
-          )
         default:
           return <Buttons onChange={this.onChange} />
       }
     }
-
     return (
       <div>
         <div className="buttons">{content()}</div>
       </div>
     )
+    // } else {
+    //   return (
+    //     <div>
+    //       <h2>
+    //         Please <Link to="/login">Login</Link> or{' '}
+    //         <Link to="/signup">Signup</Link>
+    //       </h2>
+    //     </div>
+    //   )
+    // }
   }
 }
 
 const mapStateToProps = state => {
   return {
-    pictures: state.pictures.allPics
+    pictures: state.pictures.allPics,
+    user: state.user
   }
 }
 
