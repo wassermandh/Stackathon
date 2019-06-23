@@ -1,11 +1,6 @@
 body {
   font-family: sans-serif;
 }
-
-a {
-  text-decoration: none;
-}
-
 label {
   display: block;
 }
@@ -43,4 +38,24 @@ img {
   height: 50px;
   border-radius: 50%;
   cursor: pointer;
+}
+
+.MuiTypography-root {
+  color: white;
+}
+
+.navLink {
+  color: white;
+}
+
+.MuiInputLabel-animated {
+  margin-left: 1em;
+}
+
+.MuiInputBase-root {
+  width: 300px;
+}
+
+.MuiLink-underlineHover {
+  margin-left: 2em;
 }

@@ -2,6 +2,10 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import Button from '@material-ui/core/Button'
+import Link from '@material-ui/core/Link'
+import InputLabel from '@material-ui/core/InputLabel'
+import Input from '@material-ui/core/Input'
 
 /**
  * COMPONENT
@@ -13,23 +17,21 @@ const AuthForm = props => {
     <div>
       <form onSubmit={handleSubmit} name={name}>
         <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
+          <InputLabel htmlFor="email">Email</InputLabel>
+          <Input id="email" name="email" type="text" />
         </div>
         <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
+          <InputLabel htmlFor="password">Password</InputLabel>
+          <Input name="password" type="password" />
         </div>
         <div>
-          <button type="submit">{displayName}</button>
+          <Button type="submit">{displayName}</Button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
-      <a href="/auth/google">{displayName} with Google</a>
+      <Link style={{marginLeft: '2em'}} href="/auth/google">
+        {displayName} with Google
+      </Link>
     </div>
   )
 }
@@ -38,7 +40,7 @@ const AuthForm = props => {
  * CONTAINER
  *   Note that we have two different sets of 'mapStateToProps' functions -
  *   one for Login, and one for Signup. However, they share the same 'mapDispatchToProps'
- *   function, and share the same Component. This is a good example of how we
+ *   function, and share the same Component. This is Link good example of how we
  *   can stay DRY with interfaces that are very similar to each other!
  */
 const mapLogin = state => {

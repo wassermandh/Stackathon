@@ -4,6 +4,9 @@ import {Link} from 'react-router-dom'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faTimesCircle} from '@fortawesome/free-solid-svg-icons'
 import {gettingMyPics, removePic, setPicture} from '../store/picture'
+import Grid from '@material-ui/core/Grid'
+import TextField from '@material-ui/core/TextField'
+import * as contentful from 'contentful'
 
 class images extends React.Component {
   constructor(props) {
@@ -15,27 +18,38 @@ class images extends React.Component {
   render() {
     return (
       <div>
-        {this.props.pictures.map((image, i) => {
-          return (
-            <div id="picList " key={i} className="fadein">
-              <div
-                onClick={() => this.props.removePic(image)}
-                className="delete"
+        <Grid container spacing={12} style={{padding: 24}}>
+          {this.props.pictures.map((image, i) => {
+            return (
+              <Grid
+                item
+                xs={6}
+                sm={4}
+                lg={3}
+                xl={2}
+                id="picList "
+                key={i}
+                className="fadein"
               >
-                <FontAwesomeIcon icon={faTimesCircle} size="2x" />
-              </div>
-              <h2>
-                <Link
-                  to="/picUpdate"
-                  onClick={() => this.props.setPicture(image)}
+                <div
+                  onClick={() => this.props.removePic(image)}
+                  className="delete"
                 >
-                  {image.title ? image.title : image.url}
-                </Link>
-              </h2>
-              <img src={image.url} alt="" />
-            </div>
-          )
-        })}
+                  <FontAwesomeIcon icon={faTimesCircle} size="2x" />
+                </div>
+                <h2>
+                  <Link
+                    to="/picUpdate"
+                    onClick={() => this.props.setPicture(image)}
+                  >
+                    {image.title ? image.title : image.url}
+                  </Link>
+                </h2>
+                <img src={image.url} alt="" />
+              </Grid>
+            )
+          })}
+        </Grid>
       </div>
     )
   }
