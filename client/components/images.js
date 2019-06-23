@@ -1,4 +1,5 @@
 import React from 'react'
+import Button from '@material-ui/core/Button'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -45,6 +46,9 @@ class images extends React.Component {
   componentDidMount() {
     this.props.getMyPics(this.props.user.id)
   }
+  titleClick(image) {
+    this.props.setPicture(image)
+  }
   render() {
     return (
       <div className={classes.root}>
@@ -59,7 +63,18 @@ class images extends React.Component {
               <GridListTile key={image.id}>
                 <img src={image.url} />
                 <GridListTileBar
-                  title={image.title}
+                  onClick={() => this.titleClick(image)}
+                  title={
+                    <div>
+                      <span>{image.title ? image.title : image.url}</span>
+                      <Button
+                        style={{color: 'red'}}
+                        onClick={() => this.titleClick(image)}
+                      >
+                        Edit
+                      </Button>
+                    </div>
+                  }
                   subtitle={image.caption}
                   actionIcon={
                     <div

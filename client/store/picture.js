@@ -189,6 +189,7 @@ export default function(state = defaultState, action) {
       return {...state}
     case SET_PICTURE:
       state.selectedPic = action.pic
+      history.push('/picUpdate')
       return {...state}
     default:
       return state
