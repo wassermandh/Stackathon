@@ -29,7 +29,7 @@ class UploadImages extends Component {
     files.forEach((file, i) => {
       formData.append(i, file)
     })
-    this.props.addPicture(formData)
+    this.props.addPicture(formData, this.props.user.id)
 
     this.setState({
       uploading: false
@@ -78,8 +78,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addPicture: pic => {
-      dispatch(addPicture(pic))
+    addPicture: (pic, id) => {
+      dispatch(addPicture(pic, id))
     },
     getPictures: () => {
       dispatch(getPictures())

@@ -34,6 +34,7 @@ class PictureUpdateForm extends React.Component {
             <div>
               <label> Title: </label>
               <input
+                defaultValue={this.props.selectedPic.title}
                 name="title"
                 type="text"
                 onChange={evt => this.setState({title: evt.target.value})}
@@ -47,6 +48,7 @@ class PictureUpdateForm extends React.Component {
               />
               <label>Caption: </label>
               <textarea
+                placeholder={this.props.selectedPic.caption}
                 name="caption"
                 onChange={evt => this.setState({caption: evt.target.value})}
               />

@@ -11,6 +11,7 @@ import {
   UpdatePicForm
 } from './components'
 import {me} from './store'
+import images from './components/images'
 
 /**
  * COMPONENT
@@ -36,10 +37,11 @@ class Routes extends Component {
             <Route path="/map" component={Map} />
             <Route path="/uploadPic" component={UploadImages} />
             <Route path="/picUpdate" component={UpdatePicForm} />
+            <Route path="/myPics" component={images} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        <Route component={Map} />
       </Switch>
     )
   }

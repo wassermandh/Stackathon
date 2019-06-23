@@ -45,7 +45,7 @@ router.post('/uploadPic', (req, res, next) => {
 
 router.post('/storePic', async (req, res, next) => {
   try {
-    const {DateTimeOriginal, gps, make, model, url} = req.body
+    const {DateTimeOriginal, gps, make, model, url} = req.body.allImageInfo
     let latitude = null
     let longitude = null
     let address = null
@@ -90,6 +90,12 @@ router.post('/storePic', async (req, res, next) => {
       model,
       url
     })
+    const user = await User.findOne({
+      where: {
+        id: req.body.id
+      }
+    })
+    await user.addPicture(newPic)
     res.send(newPic)
   } catch (err) {
     next(err)
@@ -144,6 +150,19 @@ router.put('/updatePic', async (req, res, next) => {
       await pic.update({caption: caption})
     }
     res.send(pic)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:id/getMyPics', async (req, res, next) => {
+  try {
+    const pics = await Picture.findAll({
+      where: {
+        userId: req.params.id
+      }
+    })
+    res.send(pics)
   } catch (err) {
     next(err)
   }

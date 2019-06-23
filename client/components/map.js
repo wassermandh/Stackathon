@@ -23,6 +23,7 @@ class Map extends Component {
     }
   }
   render() {
+    const {selectedPic} = this.state
     return (
       <div>
         {this.props.user.id ? (
@@ -31,8 +32,8 @@ class Map extends Component {
           </h2>
         ) : (
           <h2>
-            <Link to="/login">Login</Link> or <Link to="/signup">Signup</Link>to
-            upload a picture
+            <Link to="/login">Login</Link> or <Link to="/signup">Signup</Link>{' '}
+            to upload a picture
           </h2>
         )}
         <ReactMapGL
@@ -70,8 +71,14 @@ class Map extends Component {
               latitude={Number(this.state.selectedPic.latCoo)}
               onClose={() => this.setState({selectedPic: null})}
             >
-              <div>
-                <h2>{this.state.selectedPic.brand}</h2>
+              <div id="popup">
+                <h2>{this.state.selectedPic.title}</h2>
+                <img src={selectedPic.url} />
+                <p>{selectedPic.caption}</p>
+                <p>
+                  Taken with the {selectedPic.brand} {selectedPic.model}
+                </p>
+                <p>Location: {selectedPic.location}</p>
               </div>
             </Popup>
           ) : null}

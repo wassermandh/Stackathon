@@ -2,6 +2,7 @@ import axios from 'axios'
 import history from '../history'
 import {runInNewContext} from 'vm'
 import env from '../../secrets'
+import {faTrophy} from '@fortawesome/free-solid-svg-icons'
 
 /**
  * ACTION TYPES
@@ -9,13 +10,14 @@ import env from '../../secrets'
 const GOT_PICTURES = 'GOT_PICTURES'
 const ADDED_PICTURE = 'ADDED_PICTURE'
 const REMOVED_PIC = 'REMOVED_PIC'
-// const SET_PICTURE = 'SET_PICTURE'
+const SET_PICTURE = 'SET_PICTURE'
 const UPDATE_PICTURE = 'UPDATE_PICTURE'
+const GOT_MY_PICS = 'GOT_MY_PICS'
 
 /**
  * INITIAL STATE
  */
-const defaultState = {allPics: [], selectedPic: {}}
+const defaultState = {allPics: [], selectedPic: {}, myPics: []}
 
 /**
  * ACTION CREATORS
@@ -54,10 +56,24 @@ const addedPicture = pic => {
   }
 }
 
+export const setPicture = pic => {
+  return {
+    type: SET_PICTURE,
+    pic
+  }
+}
+
 const removedPic = pic => {
   return {
     type: REMOVED_PIC,
     pic
+  }
+}
+
+const gotMyPics = pics => {
+  return {
+    type: GOT_MY_PICS,
+    pics
   }
 }
 
@@ -89,7 +105,7 @@ export const getPictures = () => {
   }
 }
 
-export const addPicture = formData => {
+export const addPicture = (formData, id) => {
   return async dispatch => {
     try {
       const {data} = await axios.post('/api/pics/uploadPic', formData)
@@ -97,7 +113,7 @@ export const addPicture = formData => {
       const meta = await axios.post('/api/pics/picInfo', data)
       const metaData = meta.data
       const allImageInfo = {...imageData, ...metaData}
-      const newPic = await axios.post('/api/pics/storePic', allImageInfo)
+      const newPic = await axios.post('/api/pics/storePic', {allImageInfo, id})
       dispatch(addedPicture(newPic.data))
       history.push('/picUpdate')
     } catch (err) {
@@ -111,6 +127,17 @@ export const removePic = pic => {
     try {
       await axios.put('/api/pics/deletePic', pic)
       dispatch(removedPic(pic))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
+export const gettingMyPics = id => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.get(`api/pics/${id}/getMypics`)
+      dispatch(gotMyPics(data))
     } catch (err) {
       console.log(err)
     }
@@ -131,15 +158,19 @@ export default function(state = defaultState, action) {
     case ADDED_PICTURE:
       state.allPics.push(action.pic)
       state.selectedPic = action.pic
+      state.myPics.push(action.pic)
       return {...state}
     case REMOVED_PIC:
-      const newState = state.allPics.filter(pic => {
+      let newAllPics = state.allPics.filter(pic => {
         return pic.id !== action.pic.id
       })
-      if (newState.selectedPic.id === action.pic.id) {
-        newState.selectedPic = null
+      let newMyPics = state.myPics.filter(pic => {
+        return pic.id !== action.pic.id
+      })
+      if (state.selectedPic.id === action.pic.id) {
+        state.selectedPic = null
       }
-      return {...newState}
+      return {...state, allPics: newAllPics, myPics: newMyPics}
     case UPDATE_PICTURE:
       if (action.title) {
         state.selectedPic.title = action.title
@@ -152,6 +183,12 @@ export default function(state = defaultState, action) {
       if (action.caption) {
         state.selectedPic.caption = action.caption
       }
+      return {...state}
+    case GOT_MY_PICS:
+      state.myPics = action.pics
+      return {...state}
+    case SET_PICTURE:
+      state.selectedPic = action.pic
       return {...state}
     default:
       return state
