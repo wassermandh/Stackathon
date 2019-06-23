@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Map from './map'
+import Typography from '@material-ui/core/Typography'
 
 /**
  * COMPONENT
@@ -11,8 +12,12 @@ export const UserHome = props => {
 
   return (
     <div>
-      <h3>Welcome, {email}</h3>
-      <Map />
+      <div style={{marginBottom: '.5em', textAlign: 'center', fontSize: '2em'}}>
+        <Typography variant="p">Welcome, {email}!</Typography>
+      </div>
+      <div>
+        <Map />
+      </div>
     </div>
   )
 }

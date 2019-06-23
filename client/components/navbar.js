@@ -17,7 +17,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       alignItems: 'center',
       backgroundColor: 'darkkhaki',
       height: '150px',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      marginBottom: '1em'
     }}
   >
     <Toolbar>
@@ -41,7 +42,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         </Typography>
         <Typography variant="h4">
           <Link to="/uploadPic" className="navLink">
-            Upload a Picture
+            Upload a picture
           </Link>
         </Typography>
         <Typography variant="h4">

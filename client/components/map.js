@@ -5,6 +5,7 @@ import Routes from '../routes'
 import {Link} from 'react-router-dom'
 import ReactMapGL, {Marker, Popup} from 'react-map-gl'
 import env from '../../secrets'
+import Typography from '@material-ui/core/Typography'
 import {getPictures} from '../store/picture'
 
 class Map extends Component {
@@ -27,14 +28,12 @@ class Map extends Component {
     return (
       <div>
         {this.props.user.id ? (
-          <h2>
-            <Link to="/uploadPic">Upload</Link> a pic
-          </h2>
+          ''
         ) : (
-          <h2>
+          <Typography variant="h4" style={{margin: '.5em'}}>
             <Link to="/login">Login</Link> or <Link to="/signup">Signup</Link>{' '}
             to upload a picture
-          </h2>
+          </Typography>
         )}
         <ReactMapGL
           {...this.state}
@@ -72,7 +71,7 @@ class Map extends Component {
               onClose={() => this.setState({selectedPic: null})}
             >
               <div id="popup">
-                <h2>{this.state.selectedPic.title}</h2>
+                <Typography>{this.state.selectedPic.title}</Typography>
                 <img src={selectedPic.url} />
                 <p>{selectedPic.caption}</p>
                 <p>
