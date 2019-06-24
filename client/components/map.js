@@ -19,6 +19,8 @@ const classes = {
     maxWidth: 345
   }
 }
+const backgroundImage =
+  'https://cdn1.iconfinder.com/data/icons/Map-Markers-Icons-Demo-PNG/256/Map-Marker-Marker-Outside-Azure.png'
 
 class Map extends Component {
   componentDidMount() {
@@ -51,7 +53,6 @@ class Map extends Component {
         )}
         <ReactMapGL
           {...this.state}
-          mapStyle="mapbox://styles/wassermandh/cjx53ik37a8xl1cqspghlj5v0"
           mapboxApiAccessToken={env.MAP_BOX_TOKEN}
           onViewportChange={state => {
             this.setState(state)
@@ -73,7 +74,7 @@ class Map extends Component {
                     })
                   }}
                 >
-                  <img src="https://docs.mapbox.com/help/demos/custom-markers-gl-js/mapbox-icon.png" />
+                  <img src="https://www.mapbox.com/help/demos/custom-markers-gl-js/mapbox-icon.png" />
                 </button>
               </Marker>
             )
@@ -120,15 +121,6 @@ class Map extends Component {
                   </CardContent>
                 </CardActionArea>
               </Card>
-              {/* <div id="popup">
-                <Typography>{this.state.selectedPic.title}</Typography>
-                <img src={selectedPic.url} />
-                <p>{selectedPic.caption}</p>
-                <p>
-                  Taken with the {selectedPic.brand} {selectedPic.model}
-                </p>
-                <p>Location: {selectedPic.location}</p>
-              </div> */}
             </Popup>
           ) : null}
         </ReactMapGL>
