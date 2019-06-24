@@ -2,6 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {updateUsers} from '../store/user'
 import {updatingPicture} from '../store/picture'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
 
 class PictureUpdateForm extends React.Component {
   constructor(props) {
@@ -27,42 +29,44 @@ class PictureUpdateForm extends React.Component {
   render() {
     return (
       <div>
-        <h1> Update Your Pic Info!</h1>
-        <img src={this.props.selectedPic.url} />
-        <form className="form" onSubmit={this.handleSubmit}>
-          <ul>
-            <div>
-              <label> Title: </label>
-              <input
-                defaultValue={this.props.selectedPic.title}
-                name="title"
-                type="text"
-                onChange={evt => this.setState({title: evt.target.value})}
-              />
-              <label>Location: </label>
-              <input
-                defaultValue={this.props.selectedPic.location}
-                name="location"
-                type="text"
-                onChange={evt => this.setState({location: evt.target.value})}
-              />
-              <label>Caption: </label>
-              <textarea
-                placeholder={this.props.selectedPic.caption}
-                name="caption"
-                onChange={evt => this.setState({caption: evt.target.value})}
-              />
-            </div>
-            <button
-              type="submit"
-              onClick={evt => {
-                this.handleSubmit(evt)
-              }}
-            >
-              Submit
-            </button>
-          </ul>
-        </form>
+        <h1 style={{textAlign: 'center'}}> Update Your Pic Info!</h1>
+        <div style={{display: 'flex'}}>
+          <img src={this.props.selectedPic.url} />
+          <form className="form" onSubmit={this.handleSubmit}>
+            <ul>
+              <div>
+                <TextField
+                  label="Title"
+                  defaultValue={this.props.selectedPic.title}
+                  name="title"
+                  onChange={evt => this.setState({title: evt.target.value})}
+                />
+                <TextField
+                  label="Location"
+                  defaultValue={this.props.selectedPic.location}
+                  onChange={evt => this.setState({location: evt.target.value})}
+                />
+                <TextField
+                  label="Caption"
+                  defaultValue={this.props.selectedPic.caption}
+                  onChange={evt => this.setState({caption: evt.target.value})}
+                  multiline={true}
+                  rows={3}
+                />
+              </div>
+              <Button
+                label="Update here"
+                style={{marginLeft: '1.6em'}}
+                type="submit"
+                onClick={evt => {
+                  this.handleSubmit(evt)
+                }}
+              >
+                Submit
+              </Button>
+            </ul>
+          </form>
+        </div>
       </div>
     )
   }
