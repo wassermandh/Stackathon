@@ -88,6 +88,7 @@ export const updatingPicture = (id, title, location, caption) => {
       dispatch(
         updatePicture(id, title, location, caption, data.latCoo, data.longCoo)
       )
+      history.push('/myPics')
     } catch (err) {
       console.error(err)
     }
