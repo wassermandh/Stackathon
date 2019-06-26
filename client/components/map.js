@@ -53,7 +53,7 @@ class Map extends Component {
         )}
         <ReactMapGL
           {...this.state}
-          mapboxApiAccessToken={env.MAP_BOX_TOKEN}
+          mapboxApiAccessToken="pk.eyJ1Ijoid2Fzc2VybWFuZGgiLCJhIjoiY2p4NTF4eGpnMDVwMzN5cGkwazA0MGM0YSJ9.ULU_wkBpnO9Qc6Cx-SWVdg"
           onViewportChange={state => {
             this.setState(state)
           }}
@@ -66,6 +66,12 @@ class Map extends Component {
                 latitude={Number(pic.latCoo)}
               >
                 <button
+                  style={{
+                    border: 'none',
+                    background: 'none',
+                    cursor: 'pointer'
+                  }}
+                  type="button"
                   className="marker-btn"
                   onClick={e => {
                     e.preventDefault()
@@ -74,7 +80,11 @@ class Map extends Component {
                     })
                   }}
                 >
-                  <img src="https://www.mapbox.com/help/demos/custom-markers-gl-js/mapbox-icon.png" />
+                  <img
+                    style={{width: '30px', height: '30px', maxWidth: '100%'}}
+                    alt="map marker"
+                    src="https://www.mapbox.com/help/demos/custom-markers-gl-js/mapbox-icon.png"
+                  />
                 </button>
               </Marker>
             )
