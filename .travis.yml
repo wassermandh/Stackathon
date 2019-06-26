@@ -14,16 +14,16 @@ notifications:
 install:
   - npm ci # faster, goes only from package-lock
 before_script:
-  - psql -c 'create database "boilermaker-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+  - psql -c 'create database "pic_map-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 script:
-  - npm test             # test the code
+  - npm test # test the code
   - npm run build-client # make the bundle
 
-# before_deploy:
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+before_deploy:
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: my-city-pics # see README
+  api_key:
+    secure: 'ydI5mjhfBwWBwSUGeVy5IVbimBAqW3tmuG0rPfMxRQQbSmyo3qHMRzGZBmXFJnFN3xdB8R1voKZKsBcPINUiCiClaA9e8WMQCtK87wixUGlRgh/bwgQ8GhzZSo8ep3wW7iV2CPm4G5+k+hZBBdwlchCAhyz5PrC35oYY/9ElfFDc7nfvjJhdxGaEcT3ybuDr1fgKiWZGsjSETn83bpYiqM5H3xUBLUtjv002veU3wFcYQfbVPbDr1JQNLpIiQwoz1LNGOFUmXrUhBuNdRCrTl0vxxLP3oaZXKFa3Xjj8Ga1gf62pUW1MEPjKI1BYpS5nwU0AOczKQvmn9aav9k2bYNs562bpkEE5dTmwaEkoNxE2en5YaounpZOB3aDOM1M3PghEdm2i33n+bb3DU0fgcZEKv4XcoaPCXCz3yW9ImWbVuz6RSp0caL5iuB7mvejRFDWLRZaN2Hh3176iDky9F2kPiMT5laT1C47XsSF0BNCFx9Vja0TceQ+2zYqzSrFsZ24tnAwHhuJ6eU/SsQhHti89KdgaI/UJan5laONcUw9x9H4swzybFm1dJc9zsvwlpiY9ElopuCELGxy+xTjZXIQKrAE37UOX2H6XTPmU5GrmPoP8Llv2IszkYtFE3l7amKVZTlE2fTYpAg+3Q3I5wA1dBR/P7qmENBBGn8J+Mw0=' # see README
