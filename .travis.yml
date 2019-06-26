@@ -1,29 +1,28 @@
 language: node_js
 node_js:
-  - node # uses most recent stable node version
+  - node
 services:
-  - postgresql # starts up postgres
+  - postgresql
 addons:
-  postgresql: '9.6' # highest available postgres version on Travis
-dist: trusty # uses trusty environment
-sudo: false # when on trusty, uses Docker containers for speed
+  postgresql: '9.6'
+dist: trusty
+sudo: false
 notifications:
   email:
-    on_success: change # default: change (only when going from broken to fixed)
-    on_failure: always # default: always (which is annoying, as it should be)
+    on_success: change
+    on_failure: always
 install:
-  - npm ci # faster, goes only from package-lock
+  - npm ci
 before_script:
-  - psql -c 'create database "pic_map-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+  - psql -c 'create database "pic_map-test";' -U postgres
 script:
-  - npm test # test the code
-  - npm run build-client # make the bundle
-
+  - npm test
+  - npm run build-client
 before_deploy:
-  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+  - rm -rf node_modules
 deploy:
-  skip_cleanup: true # prevents travis from deleting the build
+  skip_cleanup: true
   provider: heroku
-  app: my-city-pics # see README
+  app: my-city-pics
   api_key:
-    secure: 'ydI5mjhfBwWBwSUGeVy5IVbimBAqW3tmuG0rPfMxRQQbSmyo3qHMRzGZBmXFJnFN3xdB8R1voKZKsBcPINUiCiClaA9e8WMQCtK87wixUGlRgh/bwgQ8GhzZSo8ep3wW7iV2CPm4G5+k+hZBBdwlchCAhyz5PrC35oYY/9ElfFDc7nfvjJhdxGaEcT3ybuDr1fgKiWZGsjSETn83bpYiqM5H3xUBLUtjv002veU3wFcYQfbVPbDr1JQNLpIiQwoz1LNGOFUmXrUhBuNdRCrTl0vxxLP3oaZXKFa3Xjj8Ga1gf62pUW1MEPjKI1BYpS5nwU0AOczKQvmn9aav9k2bYNs562bpkEE5dTmwaEkoNxE2en5YaounpZOB3aDOM1M3PghEdm2i33n+bb3DU0fgcZEKv4XcoaPCXCz3yW9ImWbVuz6RSp0caL5iuB7mvejRFDWLRZaN2Hh3176iDky9F2kPiMT5laT1C47XsSF0BNCFx9Vja0TceQ+2zYqzSrFsZ24tnAwHhuJ6eU/SsQhHti89KdgaI/UJan5laONcUw9x9H4swzybFm1dJc9zsvwlpiY9ElopuCELGxy+xTjZXIQKrAE37UOX2H6XTPmU5GrmPoP8Llv2IszkYtFE3l7amKVZTlE2fTYpAg+3Q3I5wA1dBR/P7qmENBBGn8J+Mw0=' # see README
+    secure: pPnq3K8APJ5ddrZQTEHYoN+goCdvaP7urH0BrcbtCs6FgNsGmEd6wkCouPT+xyxQAuDjXgGG2YCZem6NVj2Z37xScytsowXX4/nkLLI5PXGL7kNFUupmk3apDED8Z6Cm4JsY5ZVsvi3BTNNYzcGHYxT3DaDDnQQyyv0uRJ2NWPt0URptfaOuNHSP01mb/pM3ngGo0TIaqQC7bR12jJWdqJkmn+VU+VyQs/Ph/aD1kN2XqoueCk3HqriyIvaM29RCqALP8SUglBTb7eW/sh0x95+8vCKDIzwmKs8JMVRkbqupPxqsqClDAJbAMWUbwyBGJeHWMD02Wc1cZpcpC/goka10ctONI89eWc1csoeFRm7Jx/JTNR9m9T1qLNhHHp83pGNtpHxlWLS5lNbZBajVSTwrPK0eSn2c6RWfd847cwqInMEWqLKaWtNQ+/MyFJQyOCdN6Q2VVu0yttsB8qNud2rxsq5gQohLOj7gZ7N96Zsmr12b/EVAh5SdHcqeEB39Xz+uvvnqclGlI/NR6fyPIeLTxXJPwihU+J+b57iAx0YN4cIGSm7i0HCzK4gSkGRlwhOMWrw9v4QLj4Aj3ryZToCVRvjegT9sP9m6VN8qxFd2+uclNhBMYV6L0/f0fXiQUVqD5KY1JSqYyoYNalpzdf18hFPyfwE74N4h785RRBs=
