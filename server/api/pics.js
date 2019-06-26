@@ -74,7 +74,7 @@ router.post('/storePic', async (req, res, next) => {
       const locationData = await axios.get(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${Number(
           longitude
-        )},${Number(latitude)}.json?access_token=${env.MAP_BOX_TOKEN}`
+        )},${Number(latitude)}.json?access_token=${process.env.MAP_BOX_TOKEN}`
       )
       address = locationData.data.features[0].place_name
     }
