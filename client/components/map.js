@@ -64,6 +64,8 @@ class Map extends Component {
                 key={pic.id}
                 longitude={Number(pic.longCoo)}
                 latitude={Number(pic.latCoo)}
+                offsetLeft={-20}
+                offsetTop={-10}
               >
                 <button
                   style={{
