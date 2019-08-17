@@ -11,20 +11,30 @@ module.exports = router
 router.post('/picInfo', (req, res, next) => {
   try {
     const image = req.body[0].imagePath
+    const type = image.slice(image.length - 3).toLowerCase()
+    console.log(type)
+    if (type !== 'jpg') {
+      res.send({})
+    } else {
+      ExifImage({image}, function(error, exifData) {
+        if (error) {
+          next(error)
+        }
+        let response = {}
+        if (!exifData) {
+          res.send({})
+        } else {
+          response.make = exifData.image.Make
+          response.model = exifData.image.Model
+          response.DateTimeOriginal = exifData.exif.DateTimeOriginal
+          response.lensModel = exifData.exif.LensModel
+          response.gps = exifData.gps
+          res.send(response) // Do something with your data!
+        }
+      })
+    }
     // const labels = await getLabels(req.files.path)
     // eslint-disable-next-line no-new
-    new ExifImage({image}, function(error, exifData) {
-      if (error) {
-        next(error)
-      }
-      let response = {}
-      response.make = exifData.image.Make
-      response.model = exifData.image.Model
-      response.DateTimeOriginal = exifData.exif.DateTimeOriginal
-      response.lensModel = exifData.exif.LensModel
-      response.gps = exifData.gps
-      res.send(response) // Do something with your data!
-    })
   } catch (error) {
     next(error)
   }
@@ -49,7 +59,18 @@ router.post('/storePic', async (req, res, next) => {
     let latitude = null
     let longitude = null
     let address = null
-    const {GPSLatitude, GPSLatitudeRef, GPSLongitude, GPSLongitudeRef} = gps
+    let GPSLatitude = null
+    let GPSLatitudeRef = null
+    let GPSLongitude = null
+    let GPSLongitudeRef = null
+    console.log(gps)
+    if (gps) {
+      GPSLatitude = gps.GPSLatitude
+      GPSLatitudeRef = gps.GPSLatitudeRef
+      GPSLongitude = gps.GPSLongitudeRef
+      GPSLongitudeRef = gps.GPSLongitudeRef
+    }
+
     if (GPSLatitude && GPSLongitude) {
       latitude = 0
       latitude =
@@ -78,7 +99,6 @@ router.post('/storePic', async (req, res, next) => {
       )
       address = locationData.data.features[0].place_name
     }
-
     const newPic = await Picture.create({
       time: DateTimeOriginal,
       location: address,
