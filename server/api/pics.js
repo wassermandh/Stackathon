@@ -159,7 +159,7 @@ router.put('/updatePic', async (req, res, next) => {
       }
       const {data} = await axios.get(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${newLoc}.json?access_token=${
-          env.MAP_BOX_TOKEN
+          process.env.MAP_BOX_TOKEN
         }`
       )
       const long = data.features[0].center[0]
