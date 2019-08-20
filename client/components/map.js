@@ -92,48 +92,50 @@ class Map extends Component {
             )
           })}
           {this.state.selectedPic ? (
-            <Popup
-              id="popup"
-              longitude={Number(this.state.selectedPic.longCoo)}
-              latitude={Number(this.state.selectedPic.latCoo)}
-              onClose={() => this.setState({selectedPic: null})}
-            >
-              <Card className={classes.card}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    style={{margin: 'auto'}}
-                    image={selectedPic.url}
-                    title={selectedPic.title}
-                  />
-                  <CardContent>
-                    <Typography
-                      style={{textAlign: 'center'}}
-                      variant="h4"
-                      color="black"
-                      component="h3"
-                    >
-                      {selectedPic.title}
-                    </Typography>
-                    <Typography variant="h5" color="black" component="h4">
-                      {selectedPic.caption}
-                    </Typography>
-                    <Typography color="black" component="p">
-                      This picture was taken with the {selectedPic.brand}{' '}
-                      {selectedPic.model} at {selectedPic.location}
-                    </Typography>
-                    <Typography
-                      style={{fontStyle: 'italic'}}
-                      color="black"
-                      component="p"
-                    >
-                      Time of photo: {selectedPic.time}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Popup>
+            <div id="popup">
+              <Popup
+                id="popup"
+                longitude={Number(this.state.selectedPic.longCoo)}
+                latitude={Number(this.state.selectedPic.latCoo)}
+                onClose={() => this.setState({selectedPic: null})}
+              >
+                <Card className={classes.card}>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      style={{margin: 'auto'}}
+                      image={selectedPic.url}
+                      title={selectedPic.title}
+                    />
+                    <CardContent>
+                      <Typography
+                        style={{textAlign: 'center'}}
+                        variant="h4"
+                        color="black"
+                        component="h3"
+                      >
+                        {selectedPic.title}
+                      </Typography>
+                      <Typography variant="h5" color="black" component="h4">
+                        {selectedPic.caption}
+                      </Typography>
+                      <Typography color="black" component="p">
+                        This picture was taken with the {selectedPic.brand}{' '}
+                        {selectedPic.model} at {selectedPic.location}
+                      </Typography>
+                      <Typography
+                        style={{fontStyle: 'italic'}}
+                        color="black"
+                        component="p"
+                      >
+                        Date / Time of photo: {selectedPic.time}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Popup>
+            </div>
           ) : null}
         </ReactMapGL>
       </div>

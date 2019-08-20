@@ -11,7 +11,10 @@ class PictureUpdateForm extends React.Component {
     this.state = {
       title: '',
       location: '',
-      caption: ''
+      caption: '',
+      brand: '',
+      model: '',
+      time: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -22,7 +25,10 @@ class PictureUpdateForm extends React.Component {
       this.props.selectedPic.id,
       this.state.title,
       this.state.location,
-      this.state.caption
+      this.state.caption,
+      this.state.brand,
+      this.state.model,
+      this.state.time
     )
   }
 
@@ -53,6 +59,21 @@ class PictureUpdateForm extends React.Component {
                   multiline={true}
                   rows={3}
                 />
+                <TextField
+                  label="Brand"
+                  defaultValue={this.props.selectedPic.brand}
+                  onChange={evt => this.setState({brand: evt.target.value})}
+                />
+                <TextField
+                  label="Model"
+                  defaultValue={this.props.selectedPic.model}
+                  onChange={evt => this.setState({model: evt.target.value})}
+                />
+                <TextField
+                  label="Date/Time Taken"
+                  defaultValue={this.props.selectedPic.time}
+                  onChange={evt => this.setState({time: evt.target.value})}
+                />
               </div>
               <Button
                 label="Update here"
@@ -80,8 +101,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updatingPicture: (id, title, location, caption) => {
-      dispatch(updatingPicture(id, title, location, caption))
+    updatingPicture: (id, title, location, caption, brand, model, time) => {
+      dispatch(
+        updatingPicture(id, title, location, caption, brand, model, time)
+      )
     }
   }
 }

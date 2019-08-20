@@ -144,7 +144,7 @@ router.put('/deletePic', async (req, res, next) => {
 router.put('/updatePic', async (req, res, next) => {
   try {
     const pic = await Picture.findByPk(req.body.id)
-    const {title, location, caption} = req.body
+    const {title, location, caption, brand, model, time} = req.body
     if (title) {
       await pic.update({title: title})
     }
@@ -168,6 +168,15 @@ router.put('/updatePic', async (req, res, next) => {
     }
     if (caption) {
       await pic.update({caption: caption})
+    }
+    if (brand) {
+      await pic.update({brand: brand})
+    }
+    if (model) {
+      await pic.update({model: model})
+    }
+    if (time) {
+      await pic.update({time: time})
     }
     res.send(pic)
   } catch (err) {

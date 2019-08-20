@@ -29,7 +29,10 @@ export const updatePicture = (
   location,
   caption,
   latCoo,
-  longCoo
+  longCoo,
+  brand,
+  model,
+  time
 ) => {
   return {
     type: UPDATE_PICTURE,
@@ -38,7 +41,10 @@ export const updatePicture = (
     location,
     caption,
     latCoo,
-    longCoo
+    longCoo,
+    brand,
+    model,
+    time
   }
 }
 
@@ -80,13 +86,31 @@ const gotMyPics = pics => {
 /**
  * THUNK CREATORS
  */
-export const updatingPicture = (id, title, location, caption) => {
+export const updatingPicture = (
+  id,
+  title,
+  location,
+  caption,
+  brand,
+  model,
+  time
+) => {
   return async dispatch => {
     try {
-      const payload = {id, title, location, caption}
+      const payload = {id, title, location, caption, brand, model, time}
       const {data} = await axios.put('/api/pics/updatePic', payload)
       dispatch(
-        updatePicture(id, title, location, caption, data.latCoo, data.longCoo)
+        updatePicture(
+          id,
+          title,
+          location,
+          caption,
+          data.latCoo,
+          data.longCoo,
+          brand,
+          model,
+          time
+        )
       )
       history.push('/myPics')
     } catch (err) {
@@ -183,6 +207,15 @@ export default function(state = defaultState, action) {
       }
       if (action.caption) {
         state.selectedPic.caption = action.caption
+      }
+      if (action.brand) {
+        state.selectedPic.brand = action.brand
+      }
+      if (action.model) {
+        state.selectedPic.model = action.model
+      }
+      if (action.time) {
+        state.selectedPic.time = action.time
       }
       return {...state}
     case GOT_MY_PICS:
