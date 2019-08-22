@@ -23,7 +23,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
   >
     <Toolbar>
       <Typography variant="h1" color="white">
-        City Pics
+        Map My Pics
       </Typography>
     </Toolbar>
     {isLoggedIn ? (
