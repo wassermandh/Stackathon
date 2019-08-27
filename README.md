@@ -2,7 +2,11 @@
 
 http://mapmypics.herokuapp.com
 
-Map my pics is a public, map-based photo sharing application. Users can login with a custom username / password or using OAuth, and upload a picture to the site. Once the upload is complete, the user is redirected to a page where they can add additional information, such as the title, caption, location, date taken, and device information. If some of this info is available via EXIF data, it will be autofilled in the form. After completing this step, users can click on "home" to view their picture on a map. Users can also navigate to the "see my pics" section to edit or remove their photos. 
+Map my pics is a public, map-based photo sharing application. 
+
+## Navigating the site 
+
+The home page is a map with all the currently uploaded photos posted. Users can login or signup with a custom username / password or using OAuth, and upload a picture to the site. Once the upload is complete, the user is redirected to a page where they can add additional information, such as the picture's title, caption, location, date, and device information. If some of this info is available via EXIF data, it will be autofilled in the form. After completing this step, users can click on "home" to view their picture on the map. Users can also navigate to the "see my pics" section to edit or remove their photos. 
 
 ## Technologies:
 
