@@ -10,22 +10,22 @@ The home page is a map with all the currently uploaded photos posted. Users can 
 
 ## Technologies:
 
-Visualization:
-React-map-gl
-Material-UI
+Visualization:<br />
+React-map-gl <br />
+Material-UI<br />
 
-Data APIs:
-Mapbox
+Data APIs:<br />
+Mapbox<br />
 
-Storing/accessing data:
-Postgres
-Sequelize
-Cloudinary
-EXIF-Parser
+Storing/accessing data:<br />
+Postgres<br />
+Sequelize<br />
+Cloudinary<br />
+EXIF-Parser<br />
 
-Front-end:
-React
-React-Redux
+Front-end:<br />
+React<br />
+React-Redux<br />
 
 ## Running the app
 
